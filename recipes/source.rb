@@ -25,7 +25,7 @@ basedir = File.join Chef::Config.file_cache_path, "screen"
 git "screen" do
   destination basedir
   repository "http://git.savannah.gnu.org/r/screen.git"
-  revision "HEAD"
+  revision node['screen']['source']['revision']
 end
 
 source_directory = File.join basedir, "src"
@@ -42,10 +42,11 @@ execute "autoconf screen source" do
   not_if { File.exist? File.join(source_directory, "configure") }
 end 
 
+prefix_dir = node['screen']['prefix_dir']
+
 execute "configure screen" do
-  install_prefix = File.join "usr", "local"
   cwd source_directory
-  command "./configure --prefix=#{install_prefix}"
+  command "./configure --prefix=#{prefix_dir}"
   not_if { File.exist? File.join(source_directory, "Makefile") }
 end
 
@@ -58,5 +59,5 @@ end
 execute "install screen" do
   cwd source_directory
   command "make install"
-  not_if { File.exist? File.join("usr", "local", "screen") }
+  not_if { File.exist? File.join(prefix_dir, "bin", "screen") }
 end
