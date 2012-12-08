@@ -26,6 +26,7 @@ git "screen" do
   destination basedir
   repository "http://git.savannah.gnu.org/r/screen.git"
   revision node['screen']['source']['revision']
+  notifies :run, "execute[autoheader screen source]"
 end
 
 source_directory = File.join basedir, "src"
@@ -33,13 +34,15 @@ source_directory = File.join basedir, "src"
 execute "autoheader screen source" do
   cwd source_directory
   command "autoheader"
-  not_if { File.exist? File.join(source_directory, "config.h.in") }
+  action :nothing
+  notifies :run, "execute[autoconf screen source]"
 end
 
 execute "autoconf screen source" do
   cwd source_directory
   command "autoconf"
-  not_if { File.exist? File.join(source_directory, "configure") }
+  action :nothing
+  notifies :run, "execute[configure screen]"
 end 
 
 prefix_dir = node['screen']['prefix_dir']
@@ -47,17 +50,19 @@ prefix_dir = node['screen']['prefix_dir']
 execute "configure screen" do
   cwd source_directory
   command "./configure --prefix=#{prefix_dir}"
-  not_if { File.exist? File.join(source_directory, "Makefile") }
+  action :nothing
+  notifies :run, "execute[compile screen]"
 end
 
 execute "compile screen" do
   cwd source_directory
   command "make"
-  not_if { File.exist? File.join(source_directory, "screen") }
+  action :nothing
+  notifies :run, "execute[install screen]"
 end
 
 execute "install screen" do
   cwd source_directory
   command "make install"
-  not_if { File.exist? File.join(prefix_dir, "bin", "screen") }
+  action :nothing
 end
