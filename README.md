@@ -11,6 +11,12 @@ Requirements
 * Debian/Ubuntu
 * RHEL/CentOS/Fedora
 
+## Cookbooks:
+
+* git
+* build-essential
+
+
 License and Author
 ==================
 
