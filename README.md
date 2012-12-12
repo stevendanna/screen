@@ -16,13 +16,32 @@ Requirements
 * git
 * build-essential
 
+Attributes
+==========
+
+* `node['screen']['source']['revision']` - Git revision to checkout in
+  the source recipe.
+* ``node['screen']['source']['prefix_dir']` - Directory to use for
+  `configure`'s prefix in source recipe.
+
+Recipes
+=======
+
+## default
+
+Installs the screen package.
+
+## source
+
+Installs screen from source. Use this if a newer version of screen is
+desired than the one available as a package.
 
 License and Author
 ==================
 
-Author:: Joshua Timberman <joshua@opscode.com>
-
-Copyright:: 2008-2009, Opscode, Inc
+- Author:: Joshua Timberman <joshua@opscode.com>
+- Author:: Allan Espinosa
+- Copyright:: 2008-2012, Opscode, Inc
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
