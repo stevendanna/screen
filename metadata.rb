@@ -1,6 +1,6 @@
 name              "screen"
-maintainer        "Opscode, Inc."
-maintainer_email  "cookbooks@opscode.com"
+maintainer        "Chef Software, Inc."
+maintainer_email  "cookbooks@chef.io"
 license           "Apache 2.0"
 description       "Installs screen"
 version           "0.8.0"
